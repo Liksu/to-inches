@@ -1,0 +1,39 @@
+{
+  "name": "to-inches",
+  "version": "1.0.0",
+  "description": "Convert metric to imperial measurements with fractions",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liksu/to-inches.git"
+  },
+  "keywords": [
+    "mm-to-inches",
+    "mm",
+    "cm",
+    "km",
+    "millimeter",
+    "centimeter",
+    "millimeter",
+    "inch",
+    "inches",
+    "foot",
+    "feet",
+    "yard",
+    "yards",
+    "mile",
+    "miles",
+    "convert",
+    "fraction",
+    "format"
+  ],
+  "author": "Petro Borshchahivskyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Liksu/to-inches/issues"
+  },
+  "homepage": "https://github.com/Liksu/to-inches#readme"
+}
