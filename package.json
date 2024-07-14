@@ -1,14 +1,10 @@
 {
   "name": "to-inches",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert metric to imperial measurements with fractions",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/to-inches.ts -o dist -m",
-    "publish:patch": "npm run build && npm version patch && npm publish",
-    "publish:minor": "npm run build && npm version minor && npm publish",
-    "publish:major": "npm run build && npm version major && npm publish",
-    "publish": "npm run publish:patch",
+    "build": "rm -rf ./dist && ncc build src/to-inches.ts -o dist -m",
     "test": "jest"
   },
   "repository": {

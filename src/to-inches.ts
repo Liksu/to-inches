@@ -146,7 +146,7 @@ export class Inch {
         if (this.inches) result.push(this.inches)
         if (this.fraction) result.push(this.fraction)
         if (this.inches || this.fraction) result.push(this.#options.inchesTitle)
-        if (!result.length) result.push(0, this.#options.inchesTitle)
+        if (!result.length) result.push(0, this.#getMinimal().title)
         return result
     }
 

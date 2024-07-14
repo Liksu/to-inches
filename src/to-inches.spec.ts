@@ -97,11 +97,12 @@ const suitcases: Array<[number, {obj: object, string: string, html: string, part
 ]
 
 describe('mm2inch conversion', () => {
-    for (const [originalMM, { obj, string, html, mm }, options] of suitcases) {
+    for (const [originalMM, { obj, string, html, mm, parts }, options] of suitcases) {
         it(`should convert ${originalMM} cm to ${string}`, () => {
             const result = mm2inch(originalMM, options)
             expect(result).toEqual(obj)
             expect(String(result)).toEqual(string)
+            expect(result.parts()).toEqual(parts)
             expect(result.html()).toEqual(html)
             expect(result.mm).toBeCloseTo(mm)
         })
