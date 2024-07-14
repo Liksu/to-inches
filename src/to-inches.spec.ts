@@ -107,6 +107,11 @@ describe('to inches conversion', () => {
             expect(result.mm).toBeCloseTo(mm)
         })
     }
+
+    it('should not fail on no mm passed', () => {
+        // @ts-ignore
+        expect(toInches()).toEqual({ minus: false, miles: 0, yards: 0, feet: 0, inches: 0, fraction: '' })
+    })
 })
 
 describe('formatter', () => {

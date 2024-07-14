@@ -17,6 +17,7 @@ export class Inch {
     constructor(mm: number, options?: Partial<Options>) {
         Object.assign(this.#options, options ?? {})
 
+        mm ??= 0
         mm *= InputMultiplayer[this.#options.input]
 
         this.minus = mm < 0
