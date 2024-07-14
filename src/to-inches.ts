@@ -177,9 +177,9 @@ export class Inch {
     }
 }
 
-export default function inch(options: Partial<Options>): Formatter
-export default function inch(mm: number, options?: Partial<Options>): Inch
-export default function inch(mm: number | Partial<Options>, options?: Partial<Options>): Inch | Formatter {
+export default function toInches(options: Partial<Options>): Formatter
+export default function toInches(mm: number, options?: Partial<Options>): Inch
+export default function toInches(mm: number | Partial<Options>, options?: Partial<Options>): Inch | Formatter {
     if (typeof mm === 'object') {
         const options = mm
         return { format: (mm: number) => new Inch(mm, options) }

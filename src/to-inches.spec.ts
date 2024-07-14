@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import mm2inch from './to-inches'
+import toInches from './to-inches'
 import { Options } from './interfaces'
 
 const suitcases: Array<[number, {obj: object, string: string, html: string, parts: Array<number | string>, mm: number}, Partial<Options>]> = [
@@ -96,10 +96,10 @@ const suitcases: Array<[number, {obj: object, string: string, html: string, part
     }, { denominator: 32 }],
 ]
 
-describe('mm2inch conversion', () => {
+describe('to inches conversion', () => {
     for (const [originalMM, { obj, string, html, mm, parts }, options] of suitcases) {
-        it(`should convert ${originalMM} cm to ${string}`, () => {
-            const result = mm2inch(originalMM, options)
+        it(`should convert ${originalMM} ${options?.input ?? 'mm'} to ${string}`, () => {
+            const result = toInches(originalMM, options)
             expect(result).toEqual(obj)
             expect(String(result)).toEqual(string)
             expect(result.parts()).toEqual(parts)
@@ -111,7 +111,7 @@ describe('mm2inch conversion', () => {
 
 describe('formatter', () => {
     it('should return formatter', () => {
-        const formatter = mm2inch({ input: 'km', inches: false, feet: false }).format
+        const formatter = toInches({ input: 'km', inches: false, feet: false }).format
         expect(String(formatter(1.61))).toEqual('1 mi')
         expect(String(formatter(1.62))).toEqual('1 mi 11 yd')
     })
