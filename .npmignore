@@ -1,3 +1,5 @@
 src
+dist.tmp
 jest.config.js
 tsconfig.json
+api-extractor.json

@@ -4,15 +4,14 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
+    "declaration": true,
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
+    "outDir": "dist.tmp",
+    "rootDir": "src"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "files": ["src/to-inches.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

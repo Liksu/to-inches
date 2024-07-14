@@ -2,9 +2,12 @@
   "name": "to-inches",
   "version": "1.0.1",
   "description": "Convert metric to imperial measurements with fractions",
-  "main": "dist/index.js",
+  "main": "dist/to-inches.js",
+  "types": "dist/to-inches.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist && ncc build src/to-inches.ts -o dist -m",
+    "build:js": "rm -rf ./dist && esbuild src/to-inches.ts --bundle --platform=neutral --outdir=dist",
+    "build:types": "tsc --declaration --emitDeclarationOnly && api-extractor run --local && mv ./dist.tmp/index.d.ts ./dist/to-inches.d.ts && rm -rf ./dist.tmp",
+    "build": "npm run build:js && npm run build:types",
     "test": "jest"
   },
   "repository": {
@@ -39,7 +42,8 @@
   "homepage": "https://github.com/Liksu/to-inches#readme",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
-    "@vercel/ncc": "^0.38.1",
+    "@microsoft/api-extractor": "^7.47.0",
+    "esbuild": "0.23.0",
     "ts-jest": "^29.2.2",
     "typescript": "^5.5.3"
   }

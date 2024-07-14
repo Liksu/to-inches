@@ -1,4 +1,5 @@
 .idea/
-node_modules
+node_modules/
 dist/
-index.tsbuildinfo
+dist.tmp/
+*.tsbuildinfo
