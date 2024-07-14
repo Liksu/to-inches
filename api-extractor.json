@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "./dist.tmp/interfaces.d.ts",
+  "mainEntryPointFilePath": "./dist.tmp/to-inches.d.ts",
   "apiReport": {
     "enabled": false
   },
