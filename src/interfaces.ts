@@ -7,26 +7,41 @@ export interface Length {
     inches: number
 }
 
-type fractionKey = `${keyof Length}Fraction`
-type titleKey = `${keyof Length}Title`
-type classKey = `${keyof Length}Class`
+export type FractionKey = `${keyof Length}Fraction`
+type TitleKey = `${keyof Length}Title`
+type ClassKey = `${keyof Length}Class`
 
-export interface Options extends
-    Omit<Record<fractionKey, boolean | number>, 'inchesFraction'>,
-    Record<titleKey | classKey, string>,
-    Record<keyof Length, boolean>
-{
-    denominator: number
-    input: 'mm' | 'cm' | 'm' | 'km'
-    inchesFraction: boolean | number | 'fraction'
-}
+type FractionValue = boolean | number | 'fraction'
+type StringValue = string | null
+export type Sizes = Array<{key: keyof Length, value: number}>
+
+export type Options = 
+    Record<FractionKey, FractionValue> &
+    Record<TitleKey | ClassKey, StringValue> &
+    Record<keyof Length, boolean> &
+    {
+        denominator: number
+        input: 'mm' | 'cm' | 'm' | 'km'
+        fractionClass: string | null
+    }
 
 export type Calculated = {
     accurate: Length,
     fraction: string,
     precise: Length,
     reminders: Length,
-    sizes: Array<[keyof Length, number]>
+    sizes: Sizes
+}
+
+export interface KeyInfo {
+    key: keyof Length
+    index: number
+    isLast: boolean
+    hasFraction: boolean
+    value: number
+    title: StringValue
+    class: StringValue
+    fraction: FractionValue
 }
 
 export type Formatter = {
