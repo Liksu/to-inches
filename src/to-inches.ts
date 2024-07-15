@@ -1,4 +1,4 @@
-import { Calculated, Formatter, FractionKey, Length, KeyInfo, Options, Sizes } from './interfaces'
+import { Calculated, Formatter, FractionKey, Length, KeyInfo, Options, Sizes, ItemsData } from './interfaces'
 import { DefaultOptions, InputMultiplayer, Order, RawDividers } from './constants'
 
 const simpleRe = /{{(\w+)}}/g
@@ -204,7 +204,7 @@ export class Inch {
             .filter(Boolean)
     }
     
-    toString() {
+    toString(): string {
         const template = '{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}'
         let value = this.#renderSizes(template).join(' ')
 
@@ -223,9 +223,9 @@ export class Inch {
         }
     }
 
-    parts() {
+    parts(): Array<string | number> {
         const templates = ['{{value}}', '{{fraction}}', '{{title}}']
-        const clean = (array: Array<unknown>) => array.filter(Boolean).map(value => isNaN(Number(value)) ? value : Number(value))
+        const clean = (array: Array<string | number>) => array.filter(Boolean).map(value => isNaN(Number(value)) ? value : Number(value))
         const result = []
         if (this.minus) result.push('-')
         
@@ -239,6 +239,27 @@ export class Inch {
             result.push(...values)
         }
         return result
+    }
+    
+    items(): ItemsData {
+        const items: ItemsData = this.#calculated.sizes
+            .map(({ key }) => this.#getInfo(key))
+            .filter((info): info is KeyInfo => info != null)
+            .filter(info => info.value || (info.hasFraction && this.fraction))
+            .map(info => {
+                const data: ItemsData[0] = { type: info.title ?? info.key, value: info.value }
+                if (info.hasFraction) data.fraction = this.fraction
+                return data
+            })
+        
+        if (!items.length) {
+            const minimal = this.#getMinimal()
+            items.unshift({ type: minimal.title ?? minimal.key, value: 0 })
+        }
+        
+        if (this.minus) items.unshift({ type: 'sign', value: '-' })
+        
+        return items
     }
 
     html() {

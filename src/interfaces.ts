@@ -44,6 +44,8 @@ export interface KeyInfo {
     fraction: FractionValue
 }
 
+export type ItemsData = Array<{ type: string, value: number, fraction?: string } | { type: 'sign', value: string }>
+
 export type Formatter = {
     format: (mm: number) => Inch
 }
