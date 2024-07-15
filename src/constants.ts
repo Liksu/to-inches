@@ -40,4 +40,22 @@ export const DefaultOptions: Options = {
     inchesFraction: 'fraction',
     inchesTitle: 'in',
     inchesClass: 'in',
+    
+    templates: {
+        string: {
+            itemTemplate: '{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}',
+            minus: '-',
+            joiner: ' ',
+        },
+        parts: {
+            itemTemplate: ['{{value}}', '{{fraction}}', '{{title}}'],
+            minus: '-',
+        },
+        html: {
+            itemTemplate: '<span{{class? class="{{class}}":}}>{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}</span>',
+            fractionTemplate: `<span{{fractionClass? class="{{fractionClass}}":}}><sup>{{numerator}}</sup>/<sub>{{denominator}}</sub></span>`,
+            minus: '&minus;',
+            joiner: ' ',
+        },
+    }
 }

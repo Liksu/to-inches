@@ -1,4 +1,15 @@
-import { Calculated, Formatter, FractionKey, Length, KeyInfo, Options, Sizes, ItemsData } from './interfaces'
+import {
+    Calculated,
+    Formatter,
+    FractionKey,
+    Length,
+    KeyInfo,
+    Options,
+    Sizes,
+    ItemsData,
+    Templates,
+    OptionParams
+} from './interfaces'
 import { DefaultOptions, InputMultiplayer, Order, RawDividers } from './constants'
 
 const simpleRe = /{{(\w+)}}/g
@@ -17,8 +28,25 @@ export class Inch {
     public inches!: number
     public fraction: string
 
-    constructor(mm: number, options?: Partial<Options>) {
-        Object.assign(this.#options, options ?? {})
+    constructor(mm: number, options?: OptionParams) {
+        this.#options = {
+            ...this.#options,
+            ...options,
+            templates: {
+                string: {
+                    ...this.#options.templates.string,
+                    ...options?.templates?.string
+                },
+                parts: {
+                    ...this.#options.templates.parts,
+                    ...options?.templates?.parts
+                },
+                html: {
+                    ...this.#options.templates.html,
+                    ...options?.templates?.html
+                }
+            }
+        }
 
         mm ??= 0
         mm *= InputMultiplayer[this.#options.input]
@@ -177,7 +205,7 @@ export class Inch {
         let fraction = ''
         const [numerator, denominator] = this.fraction.split('/')
         let context: Record<string, string | number> = {
-            sign: this.minus ? '−' : '',
+            minus: this.minus ? '−' : '',
             value: info.required ? info.value : (info.value || ''),
             title: info.title ?? '',
             class: info.class ?? '',
@@ -198,18 +226,22 @@ export class Inch {
             : this.#processTemplate(itemTemplate, context)
     }
 
-    #renderSizes(itemTemplate: string, fractionTemplate?: string): Array<string> {
-        return this.#calculated.sizes
-            .map(({ key }) => this.#render(this.#getInfo(key), itemTemplate, fractionTemplate))
+    #renderSizes(type: keyof Templates): string {
+        const { itemTemplate, fractionTemplate, minus, joiner } = this.#options.templates[type]
+        let values = this.#calculated.sizes
+            .map(({ key }) => this.#render(this.#getInfo(key), itemTemplate as string, fractionTemplate))
             .filter(Boolean)
+            .join(joiner ?? ' ')
+        
+        if (!values) {
+            values = this.#render({ ...this.#getMinimal(), required: true }, itemTemplate as string, fractionTemplate)
+        }
+
+        return (this.minus ? (minus ?? '-') : '') + values
     }
     
     toString(): string {
-        const template = '{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}'
-        let value = this.#renderSizes(template).join(' ')
-
-        if (!value) value = this.#render({...this.#getMinimal(), required: true}, template)
-        return (this.minus ? '-' : '') + value
+        return this.#renderSizes('string')
     }
 
     toJSON() {
@@ -224,20 +256,21 @@ export class Inch {
     }
 
     parts(): Array<string | number> {
-        const templates = ['{{value}}', '{{fraction}}', '{{title}}']
+        const { itemTemplate, minus } = this.#options.templates.parts
         const clean = (array: Array<string | number>) => array.filter(Boolean).map(value => isNaN(Number(value)) ? value : Number(value))
-        const result = []
-        if (this.minus) result.push('-')
+        const result: Array<string | number> = []
+        if (this.minus) result.push(minus ?? '-')
         
         this.#calculated.sizes.forEach(({ key }) => {
-            const values = clean(this.#render(this.#getInfo(key), templates))
+            const values = clean(this.#render(this.#getInfo(key), itemTemplate))
             result.push(...values)
         })
         
         if (!result.length) {
-            const values = clean(this.#render({...this.#getMinimal(), required: true}, templates))
+            const values = clean(this.#render({...this.#getMinimal(), required: true}, itemTemplate))
             result.push(...values)
         }
+        
         return result
     }
     
@@ -263,21 +296,13 @@ export class Inch {
     }
 
     html() {
-        const itemTemplate = '<span{{class? class="{{class}}":}}>{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}</span>'
-        const fractionTemplate = `<span{{fractionClass? class="{{fractionClass}}":}}><sup>{{numerator}}</sup>/<sub>{{denominator}}</sub></span>`
-        let value = this.#renderSizes(itemTemplate, fractionTemplate).join(' ')
-        
-        if (!value) {
-            value = this.#render({ ...this.#getMinimal(), required: true, }, itemTemplate)
-        }
-
-        return (this.minus ? '&minus;' : '') + value
+        return this.#renderSizes('html')
     }
 }
 
-export function toInches(options: Partial<Options>): Formatter
-export function toInches(mm: number, options?: Partial<Options>): Inch
-export function toInches(mm: number | Partial<Options>, options?: Partial<Options>): Inch | Formatter {
+export function toInches(options: OptionParams): Formatter
+export function toInches(mm: number, options?: OptionParams): Inch
+export function toInches(mm: number | OptionParams, options?: OptionParams): Inch | Formatter {
     if (typeof mm === 'object') {
         const options = mm
         return { format: (mm: number) => new Inch(mm, options) }

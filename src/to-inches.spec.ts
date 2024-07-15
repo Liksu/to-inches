@@ -1,8 +1,14 @@
-import { describe, expect, it } from '@jest/globals'
+import { describe, expect, it, test } from '@jest/globals'
 import toInches, { Inch } from './to-inches'
-import { ItemsData, Options } from './interfaces'
+import { ItemsData, OptionParams } from './interfaces'
 
-const suitcases: Array<[number, {obj: object, string: string, html: string, parts: Array<number | string>, items: ItemsData, mm: number}, Partial<Options>]> = [
+type Suitcase = [
+    number,
+    { obj: object, string: string, html: string, parts: Array<number | string>, items: ItemsData, mm: number },
+    OptionParams
+]
+
+const suitcases: Array<Suitcase> = [
     [ 3048, {
         obj: { minus: false, miles: 0, yards: 0, feet: 10, inches: 0, fraction: '' },
         string: '10 ft',
@@ -171,18 +177,42 @@ const suitcases: Array<[number, {obj: object, string: string, html: string, part
         items: [{ type: 'yards', value: 18, fraction: '1/3' }],
         mm: 16764,
     }, { input: 'm', yardsFraction: 'fraction', yardsTitle: 'yards', yardsClass: null, fractionClass: null, denominator: 3 }],
+    [ -1641189, {
+        obj: { minus: true, miles: 1, yards: 34, feet: 2, inches: 5, fraction: '3/4' },
+        string: 'minus1::::mi*34::::yd*2::::ft*5::4#3::in',
+        html: '&minus;mi::1::::mi::3::4::− yd::34::::yd::3::4::− ft::2::::ft::3::4::− in::5::<span class="fraction"><sup>3</sup>/<sub>4</sub></span>::in::3::4::−',
+        parts: ['-', 1, 34, 2, 5],
+        items: [{type: 'sign', value: '-'}, { type: 'mi', value: 1 }, { type: 'yd', value: 34 }, { type: 'ft', value: 2 }, { type: 'in', value: 5, fraction: '3/4' }],
+        mm: -1641189,
+    }, { 
+        templates: {
+            html: {
+                itemTemplate: '{{class}}::{{value}}::{{fraction}}::{{title}}::{{numerator}}::{{denominator}}::{{minus}}',
+            },
+            parts: {
+                itemTemplate: ['{{value}}'],
+            },
+            string: {
+                itemTemplate: '{{value}}::{{fraction}}::{{title}}',
+                fractionTemplate: '{{denominator}}#{{numerator}}',
+                joiner: '*',
+                minus: 'minus',
+            },
+        }
+    }],
 ]
 
 describe('to inches conversion', () => {
     for (const [originalMM, { obj, string, html, mm, parts, items }, options] of suitcases) {
-        it(`should convert ${originalMM} ${options?.input ?? 'mm'} to ${string}`, () => {
+        describe(`should convert ${originalMM} ${options?.input ?? 'mm'} to ${string}`, () => {
             const result = toInches(originalMM, options)
-            expect(result).toEqual(obj)
-            expect(String(result)).toEqual(string)
-            expect(result.parts()).toEqual(parts)
-            expect(result.html()).toEqual(html)
-            expect(result.items()).toEqual(items)
-            expect(result.mm).toBeCloseTo(mm)
+
+            test('object', () => expect(result).toEqual(obj))
+            test('string', () => expect(String(result)).toEqual(string))
+            test('parts', () => expect(result.parts()).toEqual(parts))
+            test('html', () => expect(result.html()).toEqual(html))
+            test('items', () => expect(result.items()).toEqual(items))
+            test('mm', () => expect(result.mm).toBeCloseTo(mm))
         })
     }
 

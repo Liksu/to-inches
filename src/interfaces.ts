@@ -15,6 +15,19 @@ type FractionValue = boolean | number | 'fraction'
 type StringValue = string | null
 export type Sizes = Array<{key: keyof Length, value: number}>
 
+export type Template<I> = {
+    itemTemplate: I
+    fractionTemplate?: string
+    minus?: string
+    joiner?: string
+}
+
+export interface Templates {
+    string: Template<string>
+    parts: Template<Array<string>>
+    html: Template<string>
+}
+
 export type Options = 
     Record<FractionKey, FractionValue> &
     Record<TitleKey | ClassKey, StringValue> &
@@ -23,7 +36,12 @@ export type Options =
         denominator: number
         input: 'mm' | 'cm' | 'm' | 'km'
         fractionClass: string | null
+        templates: Templates
     }
+    
+export type OptionParams = Omit<Partial<Options>, 'templates'> & {
+    templates?: Partial<Templates>
+}
 
 export type Calculated = {
     accurate: Length,
