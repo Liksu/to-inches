@@ -57,7 +57,7 @@ export const DefaultOptions: Options = {
         },
         html: {
             itemTemplate: '<span{{class? class="{{class}}":}}>{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}</span>',
-            fractionTemplate: `<span{{fractionClass? class="{{fractionClass}}":}}><sup>{{numerator}}</sup>/<sub>{{denominator}}</sub></span>`,
+            fractionTemplate: `<span{{fractionClass? class="{{fractionClass}}":}}><sup>{{numerator}}</sup>&frasl;<sub>{{denominator}}</sub></span>`,
             minus: '&minus;',
             joiner: ' ',
         },

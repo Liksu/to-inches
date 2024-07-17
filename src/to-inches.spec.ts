@@ -28,14 +28,14 @@ const suitcases: Array<Suitcase> = [
     [ 3050, {
         obj: { minus: false, miles: 0, yards: 0, feet: 10, inches: 0, fraction: '1/16' },
         string: '10 ft 1/16 in',
-        html: '<span class="ft">10 ft</span> <span class="in"><span class="fraction"><sup>1</sup>/<sub>16</sub></span> in</span>',
+        html: '<span class="ft">10 ft</span> <span class="in"><span class="fraction"><sup>1</sup>&frasl;<sub>16</sub></span> in</span>',
         parts: [10, 'ft', '1/16', 'in'],
         items: [{ type: 'ft', value: 10 }, { type: 'in', value: 0, fraction: '1/16' }],
         mm: 3050,
     }, { yards: false }],
     [ 3080, {
         obj: { minus: false, miles: 0, yards: 0, feet: 10, inches: 1, fraction: '1/4' },
-        html: '<span class="ft">10 ft</span> <span class="in">1 <span class="fraction"><sup>1</sup>/<sub>4</sub></span> in</span>',
+        html: '<span class="ft">10 ft</span> <span class="in">1 <span class="fraction"><sup>1</sup>&frasl;<sub>4</sub></span> in</span>',
         string: '10 ft 1 1/4 in',
         parts: [10, 'ft', 1, '1/4', 'in'],
         items: [{ type: 'ft', value: 10 }, { type: 'in', value: 1, fraction: '1/4' }],
@@ -43,7 +43,7 @@ const suitcases: Array<Suitcase> = [
     }, { yards: false }],
     [ 3080, {
         obj: { minus: false, miles: 0, yards: 3, feet: 1, inches: 1, fraction: '1/4' },
-        html: '<span class="yd">3 yd</span> <span class="ft">1 ft</span> <span class="in">1 <span class="fraction"><sup>1</sup>/<sub>4</sub></span> in</span>',
+        html: '<span class="yd">3 yd</span> <span class="ft">1 ft</span> <span class="in">1 <span class="fraction"><sup>1</sup>&frasl;<sub>4</sub></span> in</span>',
         string: '3 yd 1 ft 1 1/4 in',
         parts: [3, 'yd', 1, 'ft', 1, '1/4', 'in'],
         items: [{ type: 'yd', value: 3 }, { type: 'ft', value: 1 }, { type: 'in', value: 1, fraction: '1/4' }],
@@ -51,7 +51,7 @@ const suitcases: Array<Suitcase> = [
     }, { yards: true }],
     [ -1641189, {
         obj: { minus: true, miles: 1, yards: 34, feet: 2, inches: 5, fraction: '3/4' },
-        html: '&minus;<span class="mi">1 mi</span> <span class="yd">34 yd</span> <span class="ft">2 ft</span> <span class="in">5 <span class="fraction"><sup>3</sup>/<sub>4</sub></span> in</span>',
+        html: '&minus;<span class="mi">1 mi</span> <span class="yd">34 yd</span> <span class="ft">2 ft</span> <span class="in">5 <span class="fraction"><sup>3</sup>&frasl;<sub>4</sub></span> in</span>',
         string: '-1 mi 34 yd 2 ft 5 3/4 in',
         parts: ['-', 1, 'mi', 34, 'yd', 2, 'ft', 5, '3/4', 'in'],
         items: [{ type: 'sign', value: '-' }, { type: 'mi', value: 1 }, { type: 'yd', value: 34 }, { type: 'ft', value: 2 }, { type: 'in', value: 5, fraction: '3/4' }],
@@ -60,7 +60,7 @@ const suitcases: Array<Suitcase> = [
     [ 8, {
         obj: { minus: false, miles: 0, yards: 0, feet: 0, inches: 3, fraction: '1/8' },
         string: '3 1/8 in',
-        html: '<span class="in">3 <span class="fraction"><sup>1</sup>/<sub>8</sub></span> in</span>',
+        html: '<span class="in">3 <span class="fraction"><sup>1</sup>&frasl;<sub>8</sub></span> in</span>',
         parts: [3, '1/8', 'in'],
         items: [{ type: 'in', value: 3, fraction: '1/8' }],
         mm: 80,
@@ -68,7 +68,7 @@ const suitcases: Array<Suitcase> = [
     [ -80, {
         obj: { minus: true, miles: 0, yards: 0, feet: 0, inches: 3, fraction: '1/8' },
         string: '-3 1/8 in',
-        html: '&minus;<span class="in">3 <span class="fraction"><sup>1</sup>/<sub>8</sub></span> in</span>',
+        html: '&minus;<span class="in">3 <span class="fraction"><sup>1</sup>&frasl;<sub>8</sub></span> in</span>',
         parts: ['-', 3, '1/8', 'in'],
         items: [{ type: 'sign', value: '-' }, { type: 'in', value: 3, fraction: '1/8' }],
         mm: -80,
@@ -116,7 +116,7 @@ const suitcases: Array<Suitcase> = [
     [ 1, {
         obj: { minus: false, miles: 0, yards: 0, feet: 0, inches: 0, fraction: '1/16' },
         string: '1/16 in',
-        html: '<span class="in"><span class="fraction"><sup>1</sup>/<sub>16</sub></span> in</span>',
+        html: '<span class="in"><span class="fraction"><sup>1</sup>&frasl;<sub>16</sub></span> in</span>',
         parts: ['1/16', 'in'],
         items: [{ type: 'in', value: 0, fraction: '1/16' }],
         mm: 1,
@@ -124,7 +124,7 @@ const suitcases: Array<Suitcase> = [
     [ 1, {
         obj: { minus: false, miles: 0, yards: 0, feet: 0, inches: 0, fraction: '1/32' },
         string: '1/32 in',
-        html: '<span class="in"><span class="fraction"><sup>1</sup>/<sub>32</sub></span> in</span>',
+        html: '<span class="in"><span class="fraction"><sup>1</sup>&frasl;<sub>32</sub></span> in</span>',
         parts: ['1/32', 'in'],
         items: [{ type: 'in', value: 0, fraction: '1/32' }],
         mm: 1,
@@ -132,7 +132,7 @@ const suitcases: Array<Suitcase> = [
     [ 13, {
         obj: { minus: false, miles: 0, yards: 0, feet: 0, inches: 0, fraction: '1/2' },
         string: '1/2 in',
-        html: '<span class="in"><span class="fraction"><sup>1</sup>/<sub>2</sub></span> in</span>',
+        html: '<span class="in"><span class="fraction"><sup>1</sup>&frasl;<sub>2</sub></span> in</span>',
         parts: ['1/2', 'in'],
         items: [{ type: 'in', value: 0, fraction: '1/2' }],
         mm: 13,
@@ -140,7 +140,7 @@ const suitcases: Array<Suitcase> = [
     [ 19, {
         obj: { minus: false, miles: 0, yards: 0, feet: 0, inches: 0, fraction: '3/4' },
         string: '3/4 in',
-        html: '<span class="in"><span class="fraction"><sup>3</sup>/<sub>4</sub></span> in</span>',
+        html: '<span class="in"><span class="fraction"><sup>3</sup>&frasl;<sub>4</sub></span> in</span>',
         parts: ['3/4', 'in'],
         items: [{ type: 'in', value: 0, fraction: '3/4' }],
         mm: 19,
@@ -148,7 +148,7 @@ const suitcases: Array<Suitcase> = [
     [ 12573, {
         obj: { minus: false, miles: 7812, yards: 0, feet: 0, inches: 0, fraction: '1/2' },
         string: '7812 1/2 miles',
-        html: '<span class="distance">7812 <span><sup>1</sup>/<sub>2</sub></span> miles</span>',
+        html: '<span class="distance">7812 <span><sup>1</sup>&frasl;<sub>2</sub></span> miles</span>',
         parts: [7812, '1/2', 'miles'],
         items: [{ type: 'miles', value: 7812, fraction: '1/2' }],
         mm: 12_573_000_000,
@@ -156,7 +156,7 @@ const suitcases: Array<Suitcase> = [
     [ 16764, {
         obj: { minus: false, miles: 10416, yards: 0, feet: 0, inches: 0, fraction: '11/16' },
         string: '10416 11/16 miles',
-        html: '<span class="distance">10416 <span><sup>11</sup>/<sub>16</sub></span> miles</span>',
+        html: '<span class="distance">10416 <span><sup>11</sup>&frasl;<sub>16</sub></span> miles</span>',
         parts: [10416, '11/16', 'miles'],
         items: [{ type: 'miles', value: 10416, fraction: '11/16' }],
         mm: 16_764_000_000,
@@ -164,7 +164,7 @@ const suitcases: Array<Suitcase> = [
     [ 16764, {
         obj: { minus: false, miles: 10416, yards: 0, feet: 0, inches: 0, fraction: '2/3' },
         string: '10416 2/3 miles',
-        html: '<span>10416 <span><sup>2</sup>/<sub>3</sub></span> miles</span>',
+        html: '<span>10416 <span><sup>2</sup>&frasl;<sub>3</sub></span> miles</span>',
         parts: [10416, '2/3', 'miles'],
         items: [{ type: 'miles', value: 10416, fraction: '2/3' }],
         mm: 16_764_000_000,
@@ -172,7 +172,7 @@ const suitcases: Array<Suitcase> = [
     [ 76.2, {
         obj: { minus: false, miles: 0, yards: 0, feet: 2, inches: 0, fraction: '1/2' },
         string: '2 1/2 feet',
-        html: '<span>2 <span><sup>1</sup>/<sub>2</sub></span> feet</span>',
+        html: '<span>2 <span><sup>1</sup>&frasl;<sub>2</sub></span> feet</span>',
         parts: [2, '1/2', 'feet'],
         items: [{ type: 'feet', value: 2, fraction: '1/2' }],
         mm: 762,
@@ -180,7 +180,7 @@ const suitcases: Array<Suitcase> = [
     [ 16.764, {
         obj: { minus: false, miles: 0, yards: 18, feet: 0, inches: 0, fraction: '1/3' },
         string: '18 1/3 yards',
-        html: '<span>18 <span><sup>1</sup>/<sub>3</sub></span> yards</span>',
+        html: '<span>18 <span><sup>1</sup>&frasl;<sub>3</sub></span> yards</span>',
         parts: [18, '1/3', 'yards'],
         items: [{ type: 'yards', value: 18, fraction: '1/3' }],
         mm: 16764,
@@ -188,7 +188,7 @@ const suitcases: Array<Suitcase> = [
     [ -1641189, {
         obj: { minus: true, miles: 1, yards: 34, feet: 2, inches: 5, fraction: '3/4' },
         string: 'minus1::::mi*34::::yd*2::::ft*5::4#3::in',
-        html: '&minus;mi::1::::mi::3::4::− yd::34::::yd::3::4::− ft::2::::ft::3::4::− in::5::<span class="fraction"><sup>3</sup>/<sub>4</sub></span>::in::3::4::−',
+        html: '&minus;mi::1::::mi::3::4::− yd::34::::yd::3::4::− ft::2::::ft::3::4::− in::5::<span class="fraction"><sup>3</sup>&frasl;<sub>4</sub></span>::in::3::4::−',
         parts: ['-', 1, 34, 2, 5],
         items: [{type: 'sign', value: '-'}, { type: 'mi', value: 1 }, { type: 'yd', value: 34 }, { type: 'ft', value: 2 }, { type: 'in', value: 5, fraction: '3/4' }],
         mm: -1641189,
