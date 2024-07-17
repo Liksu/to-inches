@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>to-inches package</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        nav {
+            margin-bottom: 1em;
+            padding-bottom: 0.8em;
+            display: flex;
+            justify-content: flex-start;
+            gap: 0;
+        }
+        
+        nav button {
+            padding: 0.5em 1em;
+            border: none;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        nav button.active {
+            border: 1px solid silver;
+            border-bottom: 0;
+            border-radius: 0.5em 0.5em 0 0;
+        }
+        
+        nav .space:last-child {
+            flex-grow: 1;
+        }
+        nav .space {
+            min-width: 5%;
+        }
+        
+        nav > :not(.active) {
+            border-bottom: 1px solid silver;
+        }
+        
+        #documentation {
+            display: none;
+        }
+        
+        h2 {
+            margin: 0 0 0.5em;
+            font-size: 120%;
+        }
+        
+        pre {
+            padding: 0.75em;
+            padding-left: 1.1em;
+            margin: 0.8em 0 1em;
+            font-weight: bold;
+        }
+        
+        pre:has(+#htmlPreview) {
+            margin-bottom: 0;
+        }
+        
+        #htmlPreview {
+            margin-bottom: 1.2em;
+            margin-left: 0.75em;
+            padding: 0.75em;
+            padding-left: 2.1em;
+            border: 1px dotted navy;
+            background-color: aliceblue;
+            width: fit-content;
+            line-height: 1em;
+            position: relative;
+        }
+        
+        #htmlPreview:before {
+            content: "preview";
+            line-height: 1em;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            display: inline-block;
+            background-color: navy;
+            color: white;
+            font-size: 9px;
+            text-transform: uppercase;
+            padding: 4px 2px;
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            height: 35px;
+            transform: rotate(180deg);
+        }
+
+        h4 {
+            margin: 0.25em 0;
+            font-weight: normal;
+        }
+
+        #console {
+            display: none;
+
+            background-color: #f9f9f9;
+            padding: 1em;
+            margin: 1em 0;
+            border: 1px solid #ddd;
+            border-radius: 0.5em;
+
+            font-family: monospace;
+            width: fit-content;
+            min-width: 64%;
+        }
+        
+        details {
+            padding: 1em;
+        }
+        
+        details input {
+            padding: 2px;
+        }
+        
+        details table {
+            margin-top: 1em;
+            border-collapse: collapse;
+        }
+        
+        details th, details td {
+            padding: 0.5em;
+            border: 1px solid #ddd;
+        }
+        
+        td.no-border {
+            border: none;
+        }
+        
+        details fieldset {
+            margin-top: 1em;
+            padding: 0.5em;
+            border: 1px solid #ddd;
+            border-radius: 0.5em;
+        }
+        
+        details legend {
+            font-weight: bold;
+            padding: 0.5em;
+        }
+        
+        .long {
+            width: 92%;
+        }
+    </style>
+</head>
+<body>
+<aside>
+    <nav>
+        <div class="space"></div>
+        <button onclick="switchTab(this)" data-type="playground" class="active">Playground</button>
+        <button onclick="switchTab(this), loadDoc()" data-type="documentation">Documentation</button>
+        <div class="space"></div>
+    </nav>
+</aside>
+<section id="playground" class="tab">
+    <header>
+        <h1>to-inches package</h1>
+        <p>to-inches is a simple package that converts feet to inches.</p>
+    </header>
+    <p id="loader">Loading package...</p>
+    <section id="console">
+        <h2  style="white-space: pre-wrap">> const result = toInches(<input id="input" placeholder="Enter mm" type="number" value="1024">, {
+    input: "<select id="unit">
+                <optgroup label="Metric">
+                    <option value="mm">mm</option>
+                    <option value="cm">cm</option>
+                    <option value="m">m</option>
+                    <option value="km">km</option>
+                </optgroup>
+                <optgroup label="Imperial">
+                    <option value="in">in</option>
+                    <option value="ft">ft</option>
+                    <option value="yd">yd</option>
+                    <option value="mi">mi</option>
+                </optgroup>
+            </select>"<span id="additionalProps"></span>
+  })
+        </h2>
+        <h4>> console.log(<strong>result</strong>)</h4>
+        <pre id="object"></pre>
+        
+        <h4>> console.log(<strong>String(result)</strong>)</h4>
+        <pre id="string"></pre>
+        
+        <h4>> console.log(<strong>result.parts()</strong>)</h4>
+        <pre id="parts"></pre>
+        
+        <h4>> console.log(<strong>result.html()</strong>)</h4>
+        <pre id="html"></pre>
+        <div id="htmlPreview"></div>
+        
+        <h4>> console.log(<strong>result.items()</strong>)</h4>
+        <pre id="items"></pre>
+        
+        <h4>> console.log(<strong>result.mm</strong>)</h4>
+        <pre id="mm"></pre>
+    </section>
+    <details open>
+        <summary>Additional configuration</summary>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <td class="no-border"></td>
+                        <td class="no-border"></td>
+                        <th>Fraction</th>
+                        <th>Title</th>
+                        <th>Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox" checked data-prop="miles"></td>
+                    <th>miles</th>
+                    <td><select data-prop="milesFraction"><option>true</option><option selected>false</option><option>fraction</option></select></td>
+                    <td><input type="text" value="mi" data-prop="milesTitle"></td>
+                    <td><input type="text" value="mi" data-prop="milesClass"></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" checked data-prop="yards"></td>
+                    <th>yards</th>
+                    <td><select data-prop="yardsFraction"><option>true</option><option selected>false</option><option>fraction</option></select></td>
+                    <td><input type="text" value="yd" data-prop="yardsTitle"></td>
+                    <td><input type="text" value="yd" data-prop="yardsClass"></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" checked data-prop="feet"></td>
+                    <th>feet</th>
+                    <td><select data-prop="feetFraction"><option>true</option><option selected>false</option><option>fraction</option></select></td>
+                    <td><input type="text" value="ft" data-prop="feetTitle"></td>
+                    <td><input type="text" value="ft" data-prop="feetClass"></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" checked data-prop="inches"></td>
+                    <th>inches</th>
+                    <td><select data-prop="inchesFraction"><option>true</option><option>false</option><option selected>fraction</option></select></td>
+                    <td><input type="text" value="in" data-prop="inchesTitle"></td>
+                    <td><input type="text" value="in" data-prop="inchesClass"></td>
+                </tr>
+                </tbody>
+            </table>
+            <p>fractionClass: <input type="text" value="fraction" data-prop="fractionClass"></p>
+            <p>denominator: <input type="number" value="16" data-prop="denominator"></p>
+            
+            <h3>Templates:</h3>
+            <fieldset>
+                <legend>string</legend>
+                <p>itemTemplate: <input type="text" class="long" value="{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}" data-prop="templates.string.itemTemplate"></p>
+                <p>fractionTemplate: <input type="text" class="long" value="" data-prop="templates.string.fractionTemplate"></p>
+                <p>minus: <input type="text" value="-" data-prop="templates.string.minus"></p>
+                <p>joiner: <input type="text" value=" " data-prop="templates.string.joiner"></p>
+            </fieldset>
+            <fieldset>
+                <legend>parts</legend>
+                <p>itemTemplate: <input type="text" class="long" value="['{{value}}', '{{fraction}}', '{{title}}']" data-prop="templates.parts.itemTemplate"></p>
+                <p>fractionTemplate: <input type="text" class="long" value="" data-prop="templates.parts.fractionTemplate"></p>
+                <p>minus: <input type="text" value="-" data-prop="templates.parts.minus"></p>
+                <p>joiner: <input type="text" value="" data-prop="templates.parts.joiner"></p>
+            </fieldset>
+            <fieldset>
+                <legend>html</legend>
+                <p>itemTemplate: <input type="text" class="long" value="<span{{class? class=&quot;{{class}}&quot;:}}>{{value}}{{fraction?{{value? :}}{{fraction}}:}}{{title? {{title}}:}}</span>"></p>
+                <p>fractionTemplate: <input type="text" class="long" value="<span{{fractionClass? class=&quot;{{fractionClass}}&quot;:}}><sup>{{numerator}}</sup>/<sub>{{denominator}}</sub></span>" data-prop="templates.html.fractionTemplate"></p>
+                <p>minus: <input type="text" value="&minus;" data-prop="templates.html.minus"></p>
+                <p>joiner: <input type="text" value=" " data-prop="templates.html.joiner"></p>
+            </fieldset>
+        </div>
+    </details>
+</section>
+<main id="documentation" class="tab">
+    <p>Loading documentation...</p>
+</main>
+</body>
+<script>
+    let doc = null
+    
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(section => section.style.display = 'none')
+        document.getElementById(tab.dataset.type).style.display = 'block'
+        document.querySelectorAll('nav button').forEach(button => button.classList.remove('active'))
+        tab.classList.add('active')
+    }
+
+    function loadDoc() {
+        if (doc) return
+        
+        const loadingDoc = fetch('https://unpkg.com/to-inches/README.md').then(resp => resp.text())
+        const loadingParser = import('https://unpkg.com/marked')
+        
+        Promise.all([loadingDoc, loadingParser])
+            .then(([text]) => {
+                doc = marked.marked(text)
+                document.getElementById('documentation').innerHTML = doc
+            })
+            .catch(console.error)
+    }
+</script>
+<script type="module">
+    const { default: toInches } = await import('https://unpkg.com/to-inches')
+    
+    document.getElementById('console').style.display = 'block'
+    document.getElementById('loader').style.display = 'none'
+    
+    const input = document.getElementById('input')
+    const unit = document.getElementById('unit')
+    const additionalProps = document.querySelectorAll('[data-prop]')
+    const output = {
+        object: document.getElementById('object'),
+        string: document.getElementById('string'),
+        parts: document.getElementById('parts'),
+        html: document.getElementById('html'),
+        htmlPreview: document.getElementById('htmlPreview'),
+        items: document.getElementById('items'),
+        mm: document.getElementById('mm')
+    }
+
+    function recalc(props = {}) {
+        const result = toInches(input.value, { input: unit.value, ...props })
+        output.object.textContent = JSON.stringify(result, null, 2)
+        output.string.textContent = String(result)
+        output.parts.textContent = JSON.stringify(result.parts()).replace(/,/g, ', ')
+        output.html.textContent = result.html()
+        output.htmlPreview.innerHTML = result.html()
+        // output.items.textContent = JSON.stringify(result.items(), null, 2)
+        output.mm.textContent = result.mm
+    }
+    
+    const defaultProps = {}
+    function updateProps() {
+        const changedProps = {} // { [prop]: value | { [sub-prop]: value } }
+        additionalProps.forEach(prop => {
+            let value = prop.type === 'checkbox' ? prop.checked : prop.value
+            if (prop.type === 'number') value = parseFloat(value)
+            
+            const propName = prop.dataset.prop
+            if (value != defaultProps[propName]) {
+                let pointer = changedProps
+                propName.split('.').forEach((segment, index, names) => {
+                    if (index >= names.length - 1) {
+                        pointer[segment] = value
+                        return
+                    }
+                    
+                    if (!pointer[segment]) pointer[segment] = {}
+                    pointer = pointer[segment]
+                })
+            }
+        })
+        
+        const changedPropsData = ['']
+        const getValue = value => typeof value === 'string' ? `"${value}"` : value
+        const print = (obj, deep = 0) => {
+            Object.entries(obj).sort(([, value]) => typeof value === 'object' ? 1 : -1).forEach(([key, value]) => {
+                const space = ' '.repeat(deep * 2)
+                if (typeof value === 'object') {
+                    changedPropsData.push(`${space}${key}: {`)
+                    print(getValue(value), deep + 1)
+                    changedPropsData.push(space + '}')
+                } else {
+                    changedPropsData.push(`${space}${key}: ${getValue(value)}`)
+                }
+            })
+        }
+        print(changedProps)
+        document.getElementById('additionalProps').textContent = changedPropsData.join(',\n    ')
+        
+        recalc(changedProps)
+    }
+
+    input.addEventListener('change', recalc)
+    input.addEventListener('keyup', recalc)
+
+    unit.addEventListener('change', recalc)
+    
+    additionalProps.forEach(prop => {
+        prop.addEventListener('change', updateProps)
+        prop.addEventListener('keyup', updateProps)
+        defaultProps[prop.dataset.prop] = prop.type === 'checkbox' ? prop.checked : prop.value
+    })
+
+    recalc()
+</script>
+</html>
