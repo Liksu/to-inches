@@ -36,12 +36,37 @@ The most common way to use converter is the default exported function `toInches`
 Example:
 
 ```js
+import toInches from 'to-inches'
+
 const result = toInches(1024)
 console.log(result)
 // { minus: false, miles: 0, yards: 1, feet: 0, inches: 4, fraction: "5/16" }
 
 console.log(`1024mm equals to ${result}`)
 // 1024mm equals to 1 yd 4 5/16 in
+```
+
+### Function signature
+
+The function accepts two parameters: numerical `mm` and `options` object. You can achieve different results combining it:
+
+- Convert with default settings by passing the only number;
+- Convert with specific settings by passing number and object;
+- Get the object with pre-configured formatter function by passing the only options object.
+
+```js
+let result = String(toInches(1024))
+// 1 yd 4 5/16 in
+
+result = String(toInches(1024, { input: 'm' }))
+// 1119 yd 2 ft 6 15/16 in
+
+const { format } = toInches({ input: 'm' })
+String(format(1))
+// 1 yd 3 3/8 in
+
+String(format(1024))
+// 1119 yd 2 ft 6 15/16 in
 ```
 
 ## Result object
