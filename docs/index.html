@@ -200,7 +200,7 @@
         <h4>> console.log(<strong>result.mm</strong>)</h4>
         <pre id="mm"></pre>
     </section>
-    <details open>
+    <details>
         <summary>Additional configuration</summary>
         <div>
             <table>
@@ -326,7 +326,7 @@
         output.parts.textContent = JSON.stringify(result.parts()).replace(/,/g, ', ')
         output.html.textContent = result.html()
         output.htmlPreview.innerHTML = result.html()
-        // output.items.textContent = JSON.stringify(result.items(), null, 2)
+        output.items.textContent = '[\n' + result.items().map(obj => '  ' + JSON.stringify(obj).replace(/,/g, ', ').replace(/\{/g, '{ ').replace(/\}/g, ' }')).join(',\n') + '\n]'
         output.mm.textContent = result.mm
     }
     
