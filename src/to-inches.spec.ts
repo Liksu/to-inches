@@ -81,6 +81,14 @@ const suitcases: Array<Suitcase> = [
         items: [{ type: 'in', value: 10 }],
         mm: 254,
     }, {}],
+    [ 46, {
+        obj: { minus: false, miles: 0, yards: 1, feet: 0, inches: 10, fraction: '' },
+        string: '1 yd 10 in',
+        html: '<span class="yd">1 yd</span> <span class="in">10 in</span>',
+        parts: [1, 'yd', 10, 'in'],
+        items: [{ type: 'yd', value: 1 }, { type: 'in', value: 10 }],
+        mm: 1168.4,
+    }, { input: 'in' }],
     [ 508, {
         obj: { minus: false, miles: 0, yards: 0, feet: 1, inches: 8, fraction: '' },
         string: '1 ft 8 in',

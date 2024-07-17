@@ -34,7 +34,7 @@ export type Options =
     Record<keyof Length, boolean> &
     {
         denominator: number
-        input: 'mm' | 'cm' | 'm' | 'km'
+        input: 'mm' | 'cm' | 'm' | 'km' | 'in' | 'ft' | 'yd' | 'mi'
         fractionClass: string | null
         templates: Templates
     }

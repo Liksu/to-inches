@@ -1,6 +1,6 @@
 {
   "name": "to-inches",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Convert metric to imperial measurements with fractions",
   "main": "dist/to-inches-node.js",
   "browser": "dist/to-inches-browser.js",
