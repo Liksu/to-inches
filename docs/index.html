@@ -40,6 +40,15 @@
             border-bottom: 1px solid silver;
         }
         
+        nav .links {
+            display: flex;
+            gap: 1em;
+            justify-content: flex-end;
+            font-size: 80%;
+            align-items: center;
+            padding-right: 1em;
+        }
+        
         #documentation {
             display: none;
         }
@@ -154,7 +163,10 @@
         <div class="space"></div>
         <button onclick="switchTab(this)" data-type="playground" class="active">Playground</button>
         <button onclick="switchTab(this), loadDoc()" data-type="documentation">Documentation</button>
-        <div class="space"></div>
+        <div class="space links">
+            <a href="https://github.com/Liksu/to-inches">github</a>
+            <a href="https://www.npmjs.com/package/to-inches">npm</a>
+        </div>
     </nav>
 </aside>
 <section id="playground" class="tab">
