@@ -1,6 +1,6 @@
 {
   "name": "to-inches",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Convert metric to imperial measurements with fractions",
   "main": "dist/to-inches-node.js",
   "browser": "dist/to-inches-browser.js",
@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/Liksu/to-inches/issues"
   },
-  "homepage": "https://github.com/Liksu/to-inches#readme",
+  "homepage": "https://liksu.github.io/to-inches/",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@microsoft/api-extractor": "^7.47.0",
