@@ -3,7 +3,7 @@
   "version": "1.5.3",
   "description": "Convert metric to imperial measurements with fractions",
   "main": "dist/to-inches-node.js",
-  "browser": "dist/to-inches-browser.js",
+  "unpkg": "dist/to-inches-browser.js",
   "types": "dist/to-inches.d.ts",
   "scripts": {
     "build:js:browser": "esbuild src/to-inches.ts --bundle --platform=neutral --outfile=dist/to-inches-browser.js",
